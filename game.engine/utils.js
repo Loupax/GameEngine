@@ -40,7 +40,6 @@
               this.splice(i, 1);
           }
         }
-        console.log(this);
       },
       swap: function(a, b){
         this[a] = this.splice(b, 1, this[a])[0];

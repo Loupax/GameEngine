@@ -1,15 +1,26 @@
 function Block(status){
 	var CARVED = 'carved', EMPTY = 'empty', FLAGGED = 'flagged';
-	this.Statuses = [CARVED, EMPTY, FLAGGED];
+	this.Statuses = [EMPTY, CARVED, FLAGGED];
 
 	this.getStatus = function(){
 		return status;
-	}
+	};
+
+	this.cycleStatus = function(){
+		var current_status_index = this.Statuses.indexOf(status);
+		if((current_status_index < 0) || (++current_status_index >= this.Statuses.length)){
+			status = EMPTY;
+		}
+		else{
+			status = this.Statuses[current_status_index];
+		}
+	};
 
 	this.setStatus = function(_status){
 		status = _status;
 	};
 }
+
 function Grid(width, height){
 	// This array will contain the state of the actual grid of the specific puzzle
 	var grid 	  = [],

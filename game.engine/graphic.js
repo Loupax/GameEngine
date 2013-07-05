@@ -18,15 +18,15 @@
 			else
 			{
 				// Convert the provided object to a game object and return it
-				var Graphic = function(opts){
-					this.x 	     = opts.x       || 0;
-					this.y 		 = opts.y       || 0;
-					this.width   = opts.width   || 0;
-					this.height  = opts.height  || 0;
-					this.texture = opts.texture || null;
-					this['background-color'] = opts['background-color'] || 'transparent';
+				var Graphic = function(){
+					this.x 	     =  0;
+					this.y 		 =  0;
+					this.width   =  0;
+					this.height  =  0;
+					this.texture =  null;
+					this['background-color'] =  'transparent';
 
-					this.draw    = opts.draw    || function(ctx){
+					this.draw    =  function(ctx){
 						// If no texture is loaded, draw the objects rectangle
 						if(this.texture === null){
 							ctx.beginPath();
@@ -45,11 +45,15 @@
 					};
 				}
 
+				var new_graphic = new Graphic();
+
+				//Mix the graphic with the provided object
 				for(var prop in opts)
 				{
-					Graphic[prop] = opts[prop];
+					new_graphic[prop] = opts[prop];
 				}
-				return new Graphic(opts);
+
+				return  new_graphic;
 			}
 		}
 	};

@@ -92,10 +92,9 @@
 			
 		}
 	};
-
-	//G.getStage().addEventListener('click', pointerHandler);
-	//G.getStage().addEventListener('mousemove', pointerHandler);
-	var e = 'click mousedown mousemove touchstart touchend touchcancel touchleave touchmove'.split(' ');
+	
+	// Events to handle:  mousedown mousemove touchstart touchend touchcancel touchleave touchmove
+	var e = 'click'.split(' ');
 	for(var i = 0; i < e.length; i++)
 	{
 		G.getStage().addEventListener(e[i], pointerHandler);;	
