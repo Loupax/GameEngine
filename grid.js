@@ -70,3 +70,77 @@ function Grid(width, height){
 	}
 
 }
+
+(function(G){
+
+	G.initializeInfoGrid = function(grid_state, block_size, grid_padding){
+		// Create all the rows of the info grid
+		
+		var row = {}, 
+			stage_width = G.getStage().width
+			stage_height = block_size;
+		
+		for(var i = 0; i < grid_state.length; i++)
+		{
+			row.x = 0;
+			row.y = i * block_size + grid_padding.top;
+			row.width = stage_width - grid_padding.left;
+			row.height = block_size;
+			G.add(G.Graphic.create(row));
+		}
+
+		for(var i = 0; i < grid_state.length; i++)
+		{
+			row.x = i * block_size + grid_padding.left;
+			row.y = 0;
+			row.width = block_size;
+			row.height = stage_width - grid_padding.left;
+			G.add(G.Graphic.create(row));
+		}
+	}
+
+	G.initializeGrid = function(grid_state, block_size, grid_padding){
+		for(var i = 0; i < grid_state.length; i++)
+		for(var j = 0; j< grid_state[i].length; j++)
+		{
+			grid_state[i][j].width = block_size;
+			grid_state[i][j].height = block_size;
+			grid_state[i][j].x = (i * block_size) + grid_padding.left;
+			grid_state[i][j].y = (j * block_size) + grid_padding.top;
+			grid_state[i][j]['background-color'] = '#ddd';
+		}
+
+		var grid_blocks = G.Graphic.create(grid_state);	
+		G.add(grid_blocks);
+		
+		var draggable = {};
+		var clickHandler = function(event){
+			this.cycleStatus();
+			switch(this.getStatus())
+			{
+				case 'carved':
+				this['background-color'] = '#000';
+				break;
+				case 'flagged':
+				this['background-color'] = '#f00';
+				break;
+				case 'empty':
+				this['background-color'] = '#ddd';
+				break;
+				default:
+					console.error('Non proper tile status');
+					break;
+			}
+		};
+
+			
+		//G.Events.addEventListener('mousemove click', grid_blocks);
+		for(var i = 0; i < grid_blocks.length; i++)
+		{
+			for(var j = 0; j < grid_blocks[i].length; j++)
+			{
+				G.Events.addEventListener('click', grid_blocks[i][j], clickHandler);
+			}
+		}
+	};
+})(G);
