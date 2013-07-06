@@ -82,24 +82,30 @@ function Grid(width, height){
 		
 		for(var i = 0; i < grid_state.length; i++)
 		{
+			row.margin = {top: 12, left: 0};
 			row.x = 0;
+			row.text = 'Row #'+(i+1)
 			row.y = i * block_size + grid_padding.top;
 			row.width = stage_width - grid_padding.left;
 			row.height = block_size;
-			G.add(G.Graphic.create(row));
+			
+			G.add(new G.Graphic.Text(row));
 		}
 
 		for(var i = 0; i < grid_state.length; i++)
 		{
+			row.margin = {top: 12, left: 0};
+			row.text = 'Column #'+(i+1);
 			row.x = i * block_size + grid_padding.left;
 			row.y = 0;
 			row.width = block_size;
 			row.height = stage_width - grid_padding.left;
-			G.add(G.Graphic.create(row));
+			G.add(new G.Graphic.Text(row));
 		}
 	}
 
 	G.initializeGrid = function(grid_state, block_size, grid_padding){
+		var grid_blocks = [];
 		for(var i = 0; i < grid_state.length; i++)
 		for(var j = 0; j< grid_state[i].length; j++)
 		{
@@ -108,9 +114,11 @@ function Grid(width, height){
 			grid_state[i][j].x = (i * block_size) + grid_padding.left;
 			grid_state[i][j].y = (j * block_size) + grid_padding.top;
 			grid_state[i][j]['background-color'] = '#ddd';
-		}
 
-		var grid_blocks = G.Graphic.create(grid_state);	
+			grid_blocks[i] = grid_blocks[i] || [];
+			grid_blocks[i][j] = new G.Graphic(grid_state[i][j]);
+		}
+		
 		G.add(grid_blocks);
 		
 		var draggable = {};
