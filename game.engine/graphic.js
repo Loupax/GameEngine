@@ -34,6 +34,8 @@
 	};
 
 	Graphic.prototype.getRectangle = function(){
+		// This will cause a huge issue with the garbage collector... Consider to keep the rectangle as
+		// an object property so no new objects get created in the game loop
 		return new G.Geometry.Rectangle(this.y, this.x + this.width, this.y + this.height, this.x);
 	};
 
