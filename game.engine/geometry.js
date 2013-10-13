@@ -7,10 +7,19 @@
 			return this;
 		},
 		Rectangle: function(top, right, bottom, left){
-			this.top = top;
-			this.right = right;
-			this.bottom = bottom;
-			this.left = left;
+			this.top 	= top 		|| 0;
+			this.right	= right  	|| 0;
+			this.bottom = bottom 	|| 0;
+			this.left 	= left 		|| 0;
+			
+			this.setFromGraphic = function(graphic){
+				this.top = graphic.y;
+				this.right = graphic.x + graphic.width;
+				this.bottom = graphic.y + graphic.height;
+				this.left = graphic.x;
+				
+				return this;
+			};
 
 			return this;
 		},

@@ -6,7 +6,9 @@
 		canvas 	= doc.querySelector('[game]') || null,
 		context = canvas ? canvas.getContext('2d') : null,
 		background = canvas.getAttribute('background') || '#0ff',
-		draw_interval = null;
+		update_timeout,
+		draw_timeout;
+		
 
 
 
@@ -23,7 +25,18 @@
 			}				
 		}
 
-		requestAnimationFrame(draw);		
+		draw_timeout = requestAnimationFrame(draw);		
+	};
+	
+	var update = function(){
+		for(var i = 0; i<objects.length;i++)
+		{
+			if(typeof objects[i].update === 'function') {
+				objects[i].update();
+			}
+		}
+		
+		update_timeout = setTimeout(update, 20);
 	};
 	
 	var G = {
@@ -42,6 +55,7 @@
 			},
 			start: function(){
 				draw();
+				update();
 			},
 			getStage: function(){
 				return canvas;

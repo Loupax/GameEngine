@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="components/angular/|game.engine/" kind="src" path=""/>
+	<classpathentry kind="src" path="components/angular"/>
+	<classpathentry kind="src" path="game.engine"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

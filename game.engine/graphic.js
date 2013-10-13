@@ -4,20 +4,63 @@
 	
 	// Convert the provided object to a game object and return it
 	var Graphic = function(opts){
-		this.x 	     =  0;
-		this.y 		 =  0;
-		this.width   =  0;
-		this.height  =  0;
+		var self = this;
+		
+				
+		var x 	     =  0;
+		var y 		 =  0;
+		var width   =  0;
+		var height  =  0;
 		this.texture =  null;
 		this['background-color'] =  'transparent';
+		this.bounding_box = new G.Geometry.Rectangle();		
+				
+		Object.defineProperty(this, 'x', {
+			  enumerable: false
+			, configurable: true
+			, get: function(){return x;}
+			, set: function(val){
+				x = val;
+				this.bounding_box.setFromGraphic(this);
+			}
+		});
 		
-		//Mix the graphic with the provided object
+		Object.defineProperty(this, 'y', {
+			  enumerable: false
+			, configurable: true
+			, get: function(){return y;}
+			, set: function(val){
+				y = val;
+				this.bounding_box.setFromGraphic(this);
+			}
+		});
+		
+		Object.defineProperty(this, 'width', {
+			  enumerable: false
+			, configurable: true
+			, get: function(){return width;}
+			, set: function(val){
+				width = val;
+				this.bounding_box.setFromGraphic(this);
+			}
+		});
+		
+		Object.defineProperty(this, 'height', {
+			  enumerable: false
+			, configurable: true
+			, get: function(){return height;}
+			, set: function(val){
+				height = val;
+				this.bounding_box.setFromGraphic(this);
+			}
+		});
+		
+		// Mix the graphic with the provided object
 		for(var prop in opts)
 		{
 			this[prop] = opts[prop];
 		}
-	}
-
+	};
 	
 	Graphic.prototype.draw    =  function(ctx){
 		// If no texture is loaded, draw the objects rectangle
@@ -36,7 +79,7 @@
 	Graphic.prototype.getRectangle = function(){
 		// This will cause a huge issue with the garbage collector... Consider to keep the rectangle as
 		// an object property so no new objects get created in the game loop
-		return new G.Geometry.Rectangle(this.y, this.x + this.width, this.y + this.height, this.x);
+		return this.bounding_box;
 	};
 
 	G.Graphic = Graphic;

@@ -28,17 +28,25 @@
 		return this;
 	}
 
-	var eventFix = function(e){
-		e = e || window.event;
-
-	    var pageX = e.pageX;
-	    var pageY = e.pageY;
-	    if (pageX === undefined) {
-	        pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-	        pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-	    }
-	    return e;
-	}
+	var eventFix = function(event){
+		var posx = 0;
+		var posy = 0;
+		if (!e) var e = window.event;
+		if (e.pageX || e.pageY) 	{
+			posx = e.pageX;
+			posy = e.pageY;
+		}
+		else if (e.clientX || e.clientY) 	{
+			posx = e.clientX + document.body.scrollLeft
+				+ document.documentElement.scrollLeft;
+			posy = e.clientY + document.body.scrollTop
+				+ document.documentElement.scrollTop;
+		}
+		// posx and posy contain the mouse position relative to the document
+		// Do something with this information
+		event.clientX = posx;
+		event.clientY = posy;
+	};
 
 	var Events = {
 			// Declares the provided object as a mouse handled object
@@ -71,17 +79,19 @@
 		};
 
 	var pointerHandler = function(event){
-		event = eventFix(event);
+		//eventFix(event);
 		var object_count = G.getObjects().length;
 		var current_object;
 		var index;
 		var event_type = event.type;
+		var relativeX = event.pageX - this.offsetLeft;
+	    var relativeY = event.pageY - this.offsetTop;
 
 		while(object_count--)
 		{
 			current_object = G.getObjects()[object_count];
 						
-			if(G.Geometry.pointIsInRectangle({x: event.clientX, y: event.clientY}, current_object.getRectangle())){
+			if(G.Geometry.pointIsInRectangle({x: relativeX, y: relativeY}, current_object.getRectangle())){
 				index = indexOfEventObject(events[event_type], current_object);
 				if(index > -1)
 				{
