@@ -25,8 +25,8 @@
 	});
 	G.Camera.init({
 		follow: hero,
-		offsetTop: 150,
-		offsetLeft: 50,
+		//offsetTop: 150,
+		//offsetLeft: 50,
 		width: 600,
 		height: 600
 	});

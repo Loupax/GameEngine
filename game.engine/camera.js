@@ -2,13 +2,13 @@
 	var Camera = function(){
 		var width =  G.getStage().width;
 		var height =  G.getStage().height;
-		this.offsetTop = 0;
-		this.offsetLeft = 0;
-		
+				
 		this.scaleX = 1;
 		this.scaleY = 1;
 		
-		
+		this.offsetTop = height / 2;
+		this.offsetLeft = width / 2;
+						
 		this.follow;
 		
 		Object.defineProperty(this, 'width', {
@@ -17,7 +17,7 @@
 			, get: function(){return width;}
 			, set: function(val){
 				width = val;
-				this.scaleX = width / G.getStage().width;				
+				this.scaleX = width / G.getStage().width;
 			}
 		});
 		
@@ -48,10 +48,12 @@
 			ctx.save();
 			console.log(self.scaleX);
 			ctx.scale(self.scaleX, self.scaleY);
-			//ctx.translate(self.focusPoint.x, self.focusPoint.y);
-			if(!!self.follow && ('x' in self.follow) && ('y' in self.follow))
+			if(!!self.follow)
 			{
-				ctx.translate(-self.follow.x + self.offsetLeft, -self.follow.y + self.offsetTop);
+				ctx.translate(
+						-self.follow.x + self.offsetLeft - (self.follow.width / 2),
+						-self.follow.y + self.offsetTop  - (self.follow.height / 2)
+				);
 			}
 			
 		});
