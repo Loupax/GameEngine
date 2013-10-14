@@ -1,10 +1,12 @@
 (function(window, document, undefined){
 	"use strict";
-	var win 	= window,
-		doc 	= document,
-		objects = [],
-		canvas 	= doc.querySelector('[game]') || null,
-		context = canvas ? canvas.getContext('2d') : null,
+	var win 	  = window,
+		doc 	  = document,
+		objects   = [],
+		preDraws  = [],
+		postDraws = [],
+		canvas 	  = doc.querySelector('[game]') || null,
+		context   = canvas ? canvas.getContext('2d') : null,
 		background = canvas.getAttribute('background') || '#0ff',
 		update_timeout,
 		draw_timeout;
@@ -18,12 +20,23 @@
 	    context.rect(0, 0, canvas.width, canvas.height);
 	    context.fillStyle = background;
 	    context.fill();
+	    var i;
+	    
+	    for(i = 0; i < preDraws.length; i++)
+	    {
+	    	preDraws[i](context);
+	    }
 
-		for(var i = 0; i < objects.length; i++) {
+		for(i = 0; i < objects.length; i++) {
 			if(typeof objects[i].draw === 'function') {
 				objects[i].draw(context);
 			}				
 		}
+		
+		for(i = 0; i < postDraws.length; i++)
+	    {
+	    	postDraws[i](context);
+	    }
 
 		draw_timeout = requestAnimationFrame(draw);		
 	};
@@ -62,6 +75,16 @@
 			},
 			getObjects: function(){
 				return objects;
+			},
+			addPreDrawHandler: function(callback){
+				if(typeof callback === 'function'){
+					preDraws.push(callback);
+				}
+			},
+			addPostDrawHandler: function(callback){
+				if(typeof callback === 'function'){
+					postDraws.push(callback);
+				}
 			}
 		};
 

@@ -23,7 +23,7 @@
 			this.text, 
 			this.x + this.margin.left, 
 			this.y + this.margin.top);
-	}
+	};
 
 	Graphic.Text = Text;
 	

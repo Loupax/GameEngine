@@ -5,12 +5,12 @@
 	// Convert the provided object to a game object and return it
 	var Graphic = function(opts){
 		var self = this;
-		
 				
-		var x 	     =  0;
-		var y 		 =  0;
+		var x 	    =  0;
+		var y 		=  0;
 		var width   =  0;
 		var height  =  0;
+		this.blur   = false;
 		this.texture =  null;
 		this['background-color'] =  'transparent';
 		this.bounding_box = new G.Geometry.Rectangle();		
@@ -73,12 +73,10 @@
 		    ctx.strokeStyle = 'black';
 		    ctx.stroke();
 
-		}
+		}	
 	};
 
 	Graphic.prototype.getRectangle = function(){
-		// This will cause a huge issue with the garbage collector... Consider to keep the rectangle as
-		// an object property so no new objects get created in the game loop
 		return this.bounding_box;
 	};
 
