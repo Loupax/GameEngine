@@ -1,6 +1,6 @@
 //@requires game.engine/graphic.js
-(function(Graphic){
-"use strict";
+define(['Graphic'],function(Graphic){
+	"use strict";
 	
 	var Text = function(opts){		
 		this.text = '';
@@ -24,7 +24,5 @@
 			this.x + this.margin.left, 
 			this.y + this.margin.top);
 	};
-
-	Graphic.Text = Text;
-	
-})(G.Graphic)
+	return Text;	
+});

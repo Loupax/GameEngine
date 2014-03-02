@@ -1,5 +1,5 @@
 //@requires game.engine/graphic.js
-(function(window, G, undefined){
+(define(['G', 'Geometry'], function(G, Geometry, undefined){
 	var events = {
 		click: []
 	};
@@ -49,34 +49,34 @@
 	};
 
 	var Events = {
-			// Declares the provided object as a mouse handled object
-			addEventListener: function(event_types, game_object, listener){
+		// Declares the provided object as a mouse handled object
+		addEventListener: function(event_types, game_object, listener){
 
-				event_types = event_types.split(' ');
-				var event_type = '',
-					iterator,
-					temp;
-				for(var index = 0; index < event_types.length; index++)
+			event_types = event_types.split(' ');
+			var event_type = '',
+				iterator,
+				temp;
+			for(var index = 0; index < event_types.length; index++)
+			{	
+				event_type = event_types[index];
+
+				if(!(event_type in events))
 				{	
-					event_type = event_types[index];
-
-					if(!(event_type in events))
-					{	
-						events[event_type] = [];
-					}
-					// We set the proper indexes of all the existing game objects 
-					// (according to the sequence they are added to the game loop)
-					
-					// We add the new game object to the game loop
-					events[event_type].push(new EventObject(game_object, listener));
-					
-					// Reindexing the table and removing any dead objects...
-					events[event_type] = events[event_type].filter(function(item){
-						return (item != undefined);
-					});					
+					events[event_type] = [];
 				}
+				// We set the proper indexes of all the existing game objects 
+				// (according to the sequence they are added to the game loop)
+				
+				// We add the new game object to the game loop
+				events[event_type].push(new EventObject(game_object, listener));
+				
+				// Reindexing the table and removing any dead objects...
+				events[event_type] = events[event_type].filter(function(item){
+					return (item != undefined);
+				});					
 			}
-		};
+		}
+	};
 
 	var pointerHandler = function(event){
 		//eventFix(event);
@@ -91,7 +91,7 @@
 		{
 			current_object = G.getObjects()[object_count];
 						
-			if(G.Geometry.pointIsInRectangle({x: relativeX, y: relativeY}, current_object.getRectangle())){
+			if(Geometry.pointIsInRectangle({x: relativeX, y: relativeY}, current_object.getRectangle())){
 				index = indexOfEventObject(events[event_type], current_object);
 				if(index > -1)
 				{
@@ -107,10 +107,8 @@
 	var e = 'click'.split(' ');
 	for(var i = 0; i < e.length; i++)
 	{
-		G.getStage().addEventListener(e[i], pointerHandler);;	
-	}
+		G.getStage().addEventListener(e[i], pointerHandler);
+	}	
 	
-	
-	
-	G.Events = Events;
-})(window, G);
+	return Events;
+});

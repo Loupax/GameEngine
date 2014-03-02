@@ -1,5 +1,16 @@
-(function(window){
-	var floor = new G.Graphic({
+require.config({
+    paths: {
+        G: 	     'game.engine/game',
+        Graphic: 'game.engine/graphic',
+        Camera:  'game.engine/camera', 
+        Collisions: 'game.engine/collisions',
+        Geometry: 'game.engine/geometry',
+    }
+});
+
+requirejs(['G', 'Graphic', 'Camera', 'Collisions', 'game/hero.js'], 
+function(G, Graphic, Camera, Collisions, hero){
+	var floor = new Graphic({
 		x:0,
 		y:400,
 		width: 1000,
@@ -7,29 +18,22 @@
 		'background-color': '#ffff00'
 	});
 	
-	var hero = new G.Graphic({
-		x: 0,
-		y: 300,
-		width: 100,
-		height: 100,
-		'background-color': '#ff0000',
-		update: function(){
-			if(G.Keyboard.keys.A){
-				hero.x -=10;
-			}
-			
-			if(G.Keyboard.keys.D){
-				hero.x += 10;
-			}
-		}
-	});
-	G.Camera.init({
+	hero.x = 0;
+	hero.y = 300;
+	Camera.init({
 		follow: hero,
-		//offsetTop: 150,
-		//offsetLeft: 50,
+		offsetTop: 768,
+		offsetLeft: 1024,
 		width: 600,
 		height: 600
 	});
+	Collisions.onCollide(hero, floor, function(){
+		hero['background-color'] = '#000000';
+	});
 	G.add([floor, hero]);
 	G.start();
-})(window, undefined);
+});
+
+/*(function(window){
+	
+})(window, undefined);*/

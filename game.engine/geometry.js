@@ -1,4 +1,4 @@
-(function(window, G, undefined){
+define(function(){
 	var Geometry = {
 		Point: function(x, y){
 			this.x = x;
@@ -37,6 +37,5 @@
 			return true;
 		}
 	};
-
-	G.Geometry = Geometry;
-})(window, G);
+	return Geometry;
+});

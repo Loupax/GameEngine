@@ -1,10 +1,13 @@
-(function(window, document, undefined){
+
+define(function(){
 	"use strict";
 	var win 	  = window,
 		doc 	  = document,
 		objects   = [],
 		preDraws  = [],
 		postDraws = [],
+		preUpdates= [],
+		postUpdates=[],
 		canvas 	  = doc.querySelector('[game]') || null,
 		context   = canvas ? canvas.getContext('2d') : null,
 		background = canvas.getAttribute('background') || '#0ff',
@@ -42,11 +45,18 @@
 	};
 	
 	var update = function(){
-		for(var i = 0; i<objects.length;i++)
+		var i = 0;
+		for(i = 0; i < preUpdates.length; i++){
+			preUpdates[i]();
+		}
+		for(i = 0; i<objects.length;i++)
 		{
 			if(typeof objects[i].update === 'function') {
 				objects[i].update();
 			}
+		}
+		for(i = 0; i < postUpdates.length; i++){
+			postUpdates[i]();
 		}
 		
 		update_timeout = setTimeout(update, 20);
@@ -85,6 +95,12 @@
 				if(typeof callback === 'function'){
 					postDraws.push(callback);
 				}
+			},
+			addPreUpdateHandler: function(callback){
+				preUpdates.push(callback);
+			},
+			addPostUpdateHandler: function(callback){
+				postUpdates.push(callback);
 			}
 		};
 
@@ -122,7 +138,5 @@
 	            clearTimeout(id);
 	        };
 	}());
-
-	win.G = G;
-})(window, document)
-
+	return G;
+});

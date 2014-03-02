@@ -1,4 +1,5 @@
-(function(G){
+define(['G'], function(G){
+	
 	var Camera = function(){
 		var width =  G.getStage().width;
 		var height =  G.getStage().height;
@@ -63,7 +64,8 @@
 			ctx.restore();
 		});
 	};
+
+	return new Camera();	
+});
 	
-	G.Camera = new Camera();	
-	console.log(G);
-})(G);
+	

@@ -1,9 +1,8 @@
 //@requires game.engine/geometry.js
-(function(G, undefined){
+define(function(){
   "use strict";
-
-
-  var Utils = {
+  
+  return {
     
     Array: {
       move: function(pos1, pos2) {
@@ -47,6 +46,5 @@
       }
     }
   }
-
-G.Utils = Utils;
-})(G)
+  
+})()

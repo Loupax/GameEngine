@@ -1,5 +1,5 @@
 //@requires game.engine/geometry.js
-(function(G, undefined){
+define(['G', 'Geometry'], function(G, Geometry, undefined){
 	"use strict";
 	
 	// Convert the provided object to a game object and return it
@@ -13,7 +13,7 @@
 		this.blur   = false;
 		this.texture =  null;
 		this['background-color'] =  'transparent';
-		this.bounding_box = new G.Geometry.Rectangle();		
+		this.bounding_box = new Geometry.Rectangle();		
 				
 		Object.defineProperty(this, 'x', {
 			  enumerable: false
@@ -79,6 +79,5 @@
 	Graphic.prototype.getRectangle = function(){
 		return this.bounding_box;
 	};
-
-	G.Graphic = Graphic;
-})(G);
+	return Graphic;
+});

@@ -1,4 +1,4 @@
-(function(G, undefined){
+define(['G'], function(G, undefined){
 	var Keyboard = {
 			keys: {}
 	};
@@ -7,5 +7,6 @@
 	window.addEventListener('keydown', function(e){Keyboard.keys[String.fromCharCode(e.which)] = true;});
 	window.addEventListener('keyup', function(e){Keyboard.keys[String.fromCharCode(e.which)] = false;});
 	
-	G.Keyboard = Keyboard;
-}(G));
+
+	return Keyboard;
+});
