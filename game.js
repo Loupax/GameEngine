@@ -34,7 +34,14 @@ function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet){
 	G.getStage().addEventListener('click', function(ev){
 		var o = U.Mouse.mousePositionOnCanvas(ev);
 		var block = new Bullet({
-			x: o.x - 5, y: o.y - 5, width: 10, height: 10, 'background-color': '#ff0000'
+			x: hero.x + hero.width / 2, 
+			y: hero.y + hero.height/2, 
+			width: 10, 
+			height: 10, 
+			'background-color': '#00ff00', 
+			angle: Geometry.getAngleBetweenPoints({x: hero.x + hero.width / 2, y: hero.y + hero.height / 2 },
+			{x: o.x - 5, y:o.y - 5}), 
+			speed: 15
 		});
 
 		G.add(block);
