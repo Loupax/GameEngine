@@ -23,6 +23,9 @@ define(function(){
 
 			return this;
 		},
+		getAngleBetweenPoints: function(pointa, pointb){
+			return Math.atan2(pointb.y - pointa.y, pointb.x - pointa.x);
+		},
 		pointIsInRectangle: function(point, rectangle){
 			if((point.x > rectangle.right) || (point.x < rectangle.left))
 			{

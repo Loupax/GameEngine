@@ -30,10 +30,8 @@ define(function(){
 	    	preDraws[i](context);
 	    }
 
-		for(i = 0; i < objects.length; i++) {
-			if(typeof objects[i].draw === 'function') {
-				objects[i].draw(context);
-			}				
+		for(i = 0; i < objects.length; i++) {			
+			objects[i].draw(context);							
 		}
 		
 		for(i = 0; i < postDraws.length; i++)
@@ -51,9 +49,7 @@ define(function(){
 		}
 		for(i = 0; i<objects.length;i++)
 		{
-			if(typeof objects[i].update === 'function') {
-				objects[i].update();
-			}
+			objects[i].update();			
 		}
 		for(i = 0; i < postUpdates.length; i++){
 			postUpdates[i]();
@@ -63,6 +59,11 @@ define(function(){
 	};
 	
 	var G = {
+			extend: function(member, extension){
+				for(var i in extension){
+					member[i] = extension[i];
+				}
+			},
 			add: function(object){
 				if(object instanceof Array){
 					for(var i = 0; i<object.length; i++)

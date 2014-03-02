@@ -54,30 +54,31 @@ define(['G', 'Geometry'], function(G, Geometry, undefined){
 				this.bounding_box.setFromGraphic(this);
 			}
 		});
+
+		this.update = function(){};
+		this.draw    =  function(ctx){
+			// If no texture is loaded, draw the objects rectangle
+			if(this.texture === null){
+				ctx.beginPath();
+			    ctx.fillStyle = this['background-color'];
+			    ctx.rect(this.x, this.y, this.width, this.height);
+			    ctx.fill();
+			    ctx.lineWidth = 1;
+			    ctx.strokeStyle = 'black';
+			    ctx.stroke();
+
+			}	
+		};
+
+		this.getRectangle = function(){
+			return this.bounding_box;
+		};
 		
 		// Mix the graphic with the provided object
 		for(var prop in opts)
 		{
 			this[prop] = opts[prop];
 		}
-	};
-	
-	Graphic.prototype.draw    =  function(ctx){
-		// If no texture is loaded, draw the objects rectangle
-		if(this.texture === null){
-			ctx.beginPath();
-		    ctx.fillStyle = this['background-color'];
-		    ctx.rect(this.x, this.y, this.width, this.height);
-		    ctx.fill();
-		    ctx.lineWidth = 1;
-		    ctx.strokeStyle = 'black';
-		    ctx.stroke();
-
-		}	
-	};
-
-	Graphic.prototype.getRectangle = function(){
-		return this.bounding_box;
 	};
 	return Graphic;
 });
