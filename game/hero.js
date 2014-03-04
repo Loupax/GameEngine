@@ -22,6 +22,8 @@ define(['game.engine/game.js', 'game.engine/graphic.js', 'game.engine/keys.js'],
 				Hero.y += 10;
 			}
 			Hero['background-color'] = '#ff0000';
+
+			document.getElementById('debug').innerHTML = JSON.stringify({x: this.x, y:this.y});
 		}
 	}); 
 

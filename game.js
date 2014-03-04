@@ -9,18 +9,11 @@ require.config({
     }
 });
 
-requirejs(['G', 'Graphic', 'Camera', 'Collisions', 'U','Geometry', 'game/hero', 'game/bullet'], 
-function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet){
-	var floor = new Graphic({
-		x:0,
-		y:400,
-		width: 1000,
-		height: 1000,
-		'background-color': '#ffff00'
-	});
+requirejs(['G', 'Graphic', 'Camera', 'Collisions', 'U','Geometry', 'game/hero', 'game/bullet', 'game/ground_grid'], 
+function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 	
-	hero.x = 0;
-	hero.y = 300;
+	hero.x = (1024/2) - hero.width / 2;
+	hero.y = (768/2)  - hero.height / 2;
 	/*Camera.init({
 		follow: hero,
 		offsetTop: 768,
@@ -28,9 +21,14 @@ function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet){
 		width: 600,
 		height: 600
 	});*/
-	Collisions.onCollide(hero, floor, function(){
-		hero['background-color'] = '#000000';
+	var grid = new GroundGrid({
+		width: 1024 / hero.width,
+		height: 768 / hero.height,
+		tile_width: hero.width,
+		tile_height: hero.height
 	});
+	grid.randomizeGrid();
+	
 	G.getStage().addEventListener('click', function(ev){
 		var o = U.Mouse.mousePositionOnCanvas(ev);
 		var block = new Bullet({
@@ -41,14 +39,13 @@ function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet){
 			'background-color': '#00ff00', 
 			angle: Geometry.getAngleBetweenPoints({x: hero.x + hero.width / 2, y: hero.y + hero.height / 2 },
 			{x: o.x - 5, y:o.y - 5}), 
-			speed: 15
+			speed: 15,
+			z_height: grid.getTileHeight(hero)
 		});
 
 		G.add(block);
-		console.log(G.getObjects(), block.x, block.y);
-		console.log(Geometry.getAngleBetweenPoints(hero, block));
 	});
-	G.add([floor, hero]);
+	G.add([hero]);
 	G.start();
 });
 
