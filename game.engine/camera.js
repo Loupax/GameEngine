@@ -44,7 +44,7 @@ define(['G', 'Geometry'], function(G, Geometry){
 	{		
 		this.followed = gameObject;	
 		this.xDeadZone = xDeadZone;
-		this.yDeadZone = yDeadZone;
+		this.yDeadZone = yDeadZone;		
 	};					
 	
 	Camera.prototype.update = function()

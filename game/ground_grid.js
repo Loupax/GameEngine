@@ -1,4 +1,4 @@
-define(['G'],function(G){
+define(['G', 'Camera'],function(G, Camera){
 	var GroundGrid = function(o){
 		var that = this;
 		this.width  = o.width || 1;
@@ -124,8 +124,10 @@ define(['G'],function(G){
 			for(x = 0; x < that.width; x++)
 			{
 				for(y = 0; y < that.height; y++){
+
 					ctx.fillStyle = rainbow(max_height, that.grid[x][y]);
 					
+
 					ctx.fillRect(x * that.tile_width, y * that.tile_height, that.tile_width, that.tile_height);					
 
 					ctx.font = "bold 12px sans-serif";

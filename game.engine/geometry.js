@@ -6,13 +6,13 @@ define(function(){
 
 			return this;
 		},
-		Rectangle: function(top, right, bottom, left){
-			this.top 	= top 		|| 0;
-			this.right	= right  	|| 0;
-			this.bottom = bottom 	|| 0;
-			this.left 	= left 		|| 0;					
-			
-			return this;
+		Rectangle: function(left, top, width, height){
+			this.left = left || 0;
+			this.top = top || 0;
+            this.width = width || 0;
+			this.height = height || 0;
+			this.right = this.left + this.width;
+			this.bottom = this.top + this.height;
 		},
 		getAngleBetweenPoints: function(pointa, pointb){
 			return Math.atan2(pointb.y - pointa.y, pointb.x - pointa.x);
@@ -61,6 +61,8 @@ define(function(){
 		this.right = graphic.x + graphic.width;
 		this.bottom = graphic.y + graphic.height;
 		this.left = graphic.x;
+		this.width = graphic.width;
+		this.height = graphic.height;
 		
 		return this;
 	};

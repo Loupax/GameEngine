@@ -15,9 +15,9 @@ function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 	hero.x = (1024/2) - hero.width / 2;
 	hero.y = (768/2)  - hero.height / 2;
 	var canvas = G.getStage();
-	var camera = new Camera(0, 0, 2048, 2048);
+	var camera = new Camera(0, 0, 1024, 768);
 	
-	camera.follow(hero, canvas.width/2, canvas.height/2);
+	camera.follow(hero, 100, 100);
 	G.addPreUpdateHandler(function(){camera.update();});
 	
 	var grid = new GroundGrid({
