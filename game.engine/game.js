@@ -25,6 +25,7 @@ define(function(){
 	    context.fill();
 	    var i;
 	    
+	    context.save();
 	    for(i = 0; i < preDraws.length; i++)
 	    {
 	    	preDraws[i](context);
@@ -38,6 +39,7 @@ define(function(){
 	    {
 	    	postDraws[i](context);
 	    }
+	    context.restore();
 
 		draw_timeout = requestAnimationFrame(draw);		
 	};

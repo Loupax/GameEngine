@@ -1,4 +1,4 @@
-define(['G', 'game/hero_camera'],function(G, camera){
+define(['G'],function(G){
 	var GroundGrid = function(o){
 		var that = this;
 		this.width  = o.width || 1;
@@ -62,10 +62,6 @@ define(['G', 'game/hero_camera'],function(G, camera){
 		};
 
 		this.getTileHeight = function(point){
-			//screenx = gridx * grid_width
-
-			//gridx = grid_width / screenx
-
 			var tile_x = Math.floor(point.x / that.tile_width  );
 			var tile_y = Math.floor( point.y /that.tile_height  );
 			
@@ -80,8 +76,8 @@ define(['G', 'game/hero_camera'],function(G, camera){
 		};
 		
 
-		var stage = G.getStage();
-		var ctx   = stage.getContext('2d');
+		//var stage = G.getStage();
+		//var ctx   = stage.getContext('2d');
 		
 		var rainbow = function(numOfSteps, step) {
 		    // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
@@ -124,7 +120,7 @@ define(['G', 'game/hero_camera'],function(G, camera){
 		    return array;
 		}
 		
-		G.addPreDrawHandler(function(){			
+		G.addPreDrawHandler(function(ctx){			
 			var x,y;
 			
 			for(x = 0; x < that.width; x++)

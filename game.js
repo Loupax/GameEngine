@@ -2,20 +2,29 @@ require.config({
     paths: {
         G: 	     'game.engine/game',
         Graphic: 'game.engine/graphic',
-        Camera:  'game.engine/camera', 
+        Camera:  'game.engine/camera',
+        Camera2:  'game.engine/camera2', 
         Collisions: 'game.engine/collisions',
         Geometry: 'game.engine/geometry',
         U: 'game.engine/utils',
     }
 });
 
-requirejs(['G', 'Graphic', 'Camera', 'Collisions', 'U','Geometry', 'game/hero', 'game/bullet', 'game/ground_grid'], 
-function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
+requirejs(['G', 'Graphic', 'Camera2' ,'Collisions', 'U','Geometry', 'game/hero', 'game/bullet', 'game/ground_grid'], 
+function(G, Graphic, camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 	
 	hero.x = (1024/2) - hero.width / 2;
 	hero.y = (768/2)  - hero.height / 2;
 	
 	
+	camera.init({
+		follow: hero,
+		//offsetTop: 150,
+		//offsetLeft: 50,
+		width: 1024/2,
+		height: 768/2
+	});
+
 	var grid = new GroundGrid({
 		width: 1024 / hero.width,
 		height: 768 / hero.height,
