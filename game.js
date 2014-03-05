@@ -14,13 +14,12 @@ function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 	
 	hero.x = (1024/2) - hero.width / 2;
 	hero.y = (768/2)  - hero.height / 2;
-	/*Camera.init({
-		follow: hero,
-		offsetTop: 768,
-		offsetLeft: 1024,
-		width: 600,
-		height: 600
-	});*/
+	var canvas = G.getStage();
+	var camera = new Camera(0, 0, 2048, 2048);
+	
+	camera.follow(hero, canvas.width/2, canvas.height/2);
+	G.addPreUpdateHandler(function(){camera.update();});
+	
 	var grid = new GroundGrid({
 		width: 1024 / hero.width,
 		height: 768 / hero.height,

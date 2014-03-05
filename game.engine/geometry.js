@@ -10,17 +10,8 @@ define(function(){
 			this.top 	= top 		|| 0;
 			this.right	= right  	|| 0;
 			this.bottom = bottom 	|| 0;
-			this.left 	= left 		|| 0;
+			this.left 	= left 		|| 0;					
 			
-			this.setFromGraphic = function(graphic){
-				this.top = graphic.y;
-				this.right = graphic.x + graphic.width;
-				this.bottom = graphic.y + graphic.height;
-				this.left = graphic.x;
-				
-				return this;
-			};
-
 			return this;
 		},
 		getAngleBetweenPoints: function(pointa, pointb){
@@ -40,5 +31,39 @@ define(function(){
 			return true;
 		}
 	};
+
+	
+	Geometry.Rectangle.prototype.set = function(left, top, /*optional*/width, /*optional*/height){
+		this.left = left;
+        this.top = top;
+        this.width = width || this.width;
+        this.height = height || this.height
+        this.right = (this.left + this.width);
+        this.bottom = (this.top + this.height);
+	}
+			
+	Geometry.Rectangle.prototype.within = function(r) {
+		return (r.left <= this.left && 
+				r.right >= this.right &&
+				r.top <= this.top && 
+				r.bottom >= this.bottom);
+	}		
+			
+	Geometry.Rectangle.prototype.overlaps = function(r) {
+		return (this.left < r.right && 
+				r.left < this.right && 
+				this.top < r.bottom &&
+				r.top < this.bottom);
+	}
+
+	Geometry.Rectangle.prototype.setFromGraphic = function(graphic){
+		this.top = graphic.y;
+		this.right = graphic.x + graphic.width;
+		this.bottom = graphic.y + graphic.height;
+		this.left = graphic.x;
+		
+		return this;
+	};
+	
 	return Geometry;
 });
