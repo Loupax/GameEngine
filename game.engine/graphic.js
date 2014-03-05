@@ -1,5 +1,5 @@
 //@requires game.engine/geometry.js
-define(['G', 'Geometry'], function(G, Geometry, undefined){
+define(['G', 'Geometry'], function(G, Geometry){
 	"use strict";
 	
 	// Convert the provided object to a game object and return it
@@ -12,6 +12,7 @@ define(['G', 'Geometry'], function(G, Geometry, undefined){
 		var height  =  0;
 		this.blur   = false;
 		this.texture =  null;
+		this.dead	 = false;
 		this['background-color'] =  'transparent';
 		this.bounding_box = new Geometry.Rectangle();		
 				
@@ -57,17 +58,19 @@ define(['G', 'Geometry'], function(G, Geometry, undefined){
 
 		this.update = function(){};
 		this.draw    =  function(ctx){
-			// If no texture is loaded, draw the objects rectangle
-			if(this.texture === null){
-				ctx.beginPath();
-			    ctx.fillStyle = this['background-color'];
-			    ctx.rect(this.x, this.y, this.width, this.height);
-			    ctx.fill();
-			    ctx.lineWidth = 1;
-			    ctx.strokeStyle = 'black';
-			    ctx.stroke();
+			if(this.dead === false){
+				// If no texture is loaded, draw the objects rectangle
+				if(this.texture === null){
+					ctx.beginPath();
+				    ctx.fillStyle = this['background-color'];
+				    ctx.rect(this.x, this.y, this.width, this.height);
+				    ctx.fill();
+				    ctx.lineWidth = 1;
+				    ctx.strokeStyle = 'black';
+				    ctx.stroke();
 
-			}	
+				}	
+			}
 		};
 
 		this.getRectangle = function(){
@@ -80,5 +83,7 @@ define(['G', 'Geometry'], function(G, Geometry, undefined){
 			this[prop] = opts[prop];
 		}
 	};
+
+
 	return Graphic;
 });

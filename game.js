@@ -14,11 +14,7 @@ function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 	
 	hero.x = (1024/2) - hero.width / 2;
 	hero.y = (768/2)  - hero.height / 2;
-	var canvas = G.getStage();
-	var camera = new Camera(0, 0, 1024, 768);
 	
-	camera.follow(hero, 100, 100);
-	G.addPreUpdateHandler(function(){camera.update();});
 	
 	var grid = new GroundGrid({
 		width: 1024 / hero.width,
@@ -39,7 +35,8 @@ function(G, Graphic, Camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 			angle: Geometry.getAngleBetweenPoints({x: hero.x + hero.width / 2, y: hero.y + hero.height / 2 },
 			{x: o.x - 5, y:o.y - 5}), 
 			speed: 15,
-			z_height: grid.getTileHeight(hero)
+			z_height: grid.getTileHeight({x: hero.x + hero.width / 2, y: hero.y + hero.height / 2 }),
+			grid: grid
 		});
 
 		G.add(block);

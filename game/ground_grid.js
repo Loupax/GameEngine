@@ -1,4 +1,4 @@
-define(['G', 'Camera'],function(G, Camera){
+define(['G', 'game/hero_camera'],function(G, camera){
 	var GroundGrid = function(o){
 		var that = this;
 		this.width  = o.width || 1;
@@ -48,6 +48,7 @@ define(['G', 'Camera'],function(G, Camera){
 
 		};
 
+
 		this.updateGrid = function(){
 			var x,y;
 			for(x = 0; x < this.width; x++){
@@ -68,9 +69,14 @@ define(['G', 'Camera'],function(G, Camera){
 			var tile_x = Math.floor(point.x / that.tile_width  );
 			var tile_y = Math.floor( point.y /that.tile_height  );
 			
-			return that.grid[tile_x][tile_y];
-			console.log(tile_x, tile_y);
-
+			if(that.grid[tile_x] && that.grid[tile_x][tile_y])
+			{
+				return that.grid[tile_x][tile_y];	
+			}
+			else
+			{
+				return Infinity;
+			}
 		};
 		
 
