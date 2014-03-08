@@ -9,6 +9,8 @@ define(['G'], function(G){
 		this.offsetTop = height / 2;
 		this.offsetLeft = width / 2;
 
+		this.position = {x: 0,y: 0};
+
 		this.follow;
 
 		Object.defineProperty(this, 'width', {
@@ -49,9 +51,12 @@ define(['G'], function(G){
 			ctx.scale(self.scaleX, self.scaleY);
 			if(!!self.follow)
 			{
+				self.position.x = -self.follow.x + self.offsetLeft - (self.follow.width / 2);
+				self.position.y = -self.follow.y + self.offsetTop  - (self.follow.height / 2);
+				
 				ctx.translate(
-						-self.follow.x + self.offsetLeft - (self.follow.width / 2),
-						-self.follow.y + self.offsetTop  - (self.follow.height / 2)
+						self.position.x,
+						self.position.y
 				);
 			}
 
@@ -61,6 +66,14 @@ define(['G'], function(G){
 			// After drawing
 			ctx.restore();
 		});
+	};
+
+	Camera.prototype.toWorld = function(point){
+		return {
+			x: (point.x / this.scaleX) + this.position.x,
+			y: (point.y / this.scaleY) + this.position.y
+		};	
+    //{ x: (point.x / @scale) + @x, y: (point.y / @scale) + @y }
 	};
 
 	return new Camera();

@@ -34,10 +34,10 @@ function(G, Graphic, camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 	grid.randomizeGrid();
 	
 	G.getStage().addEventListener('click', function(ev){
-		var o = U.Mouse.mousePositionOnCanvas(ev);
+		var o = camera.toWorld(ev);//U.Mouse.mousePositionOnCanvas(ev);
 		var block = new Bullet({
 			x: hero.x + hero.width / 2, 
-			y: hero.y + hero.height/2, 
+			y: hero.y + hero.height /2, 
 			width: 10, 
 			height: 10, 
 			'background-color': '#00ff00', 
