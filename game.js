@@ -24,6 +24,8 @@ function(G, Graphic, camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 		width: 1024/2,
 		height: 768/2
 	});
+	G.getStage().width = camera.width;
+	G.getStage().height = camera.height;
 
 	var grid = new GroundGrid({
 		width: 1024 / hero.width,
@@ -31,10 +33,10 @@ function(G, Graphic, camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 		tile_width: hero.width,
 		tile_height: hero.height
 	});
-	grid.randomizeGrid();
+	grid.updateGrid();
 	
 	G.getStage().addEventListener('click', function(ev){
-		var o = camera.toWorld(ev);//U.Mouse.mousePositionOnCanvas(ev);
+		var o = camera.convertStageToWorldCoords(ev);
 		var block = new Bullet({
 			x: hero.x + hero.width / 2, 
 			y: hero.y + hero.height /2, 
@@ -53,7 +55,3 @@ function(G, Graphic, camera, Collisions, U,Geometry, hero, Bullet, GroundGrid){
 	G.add([hero]);
 	G.start();
 });
-
-/*(function(window){
-	
-})(window, undefined);*/

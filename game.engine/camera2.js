@@ -46,8 +46,6 @@ define(['G'], function(G){
 		}
 
 		G.addPreDrawHandler(function(ctx){
-			// Before drawing
-			ctx.save();
 			ctx.scale(self.scaleX, self.scaleY);
 			if(!!self.follow)
 			{
@@ -61,19 +59,20 @@ define(['G'], function(G){
 			}
 
 		});
-
-		G.addPostDrawHandler(function(ctx){
-			// After drawing
-			ctx.restore();
-		});
 	};
 
-	Camera.prototype.toWorld = function(point){
-		return {
-			x: (point.x / this.scaleX) + this.position.x,
-			y: (point.y / this.scaleY) + this.position.y
-		};	
-    //{ x: (point.x / @scale) + @x, y: (point.y / @scale) + @y }
+	Camera.prototype.convertStageToWorldCoords = function(point){
+		var worldCoords = {
+			x: (point.x / this.scaleX) - this.offsetLeft,
+			y: (point.y / this.scaleY) - this.offsetTop
+		};
+
+		if(!!this.follow)
+		{
+			worldCoords.x += this.follow.x + ((this.follow.width * this.scaleX) / 2);
+			worldCoords.y += this.follow.y + ((this.follow.height * this.scaleY) / 2);	
+		}		
+		return worldCoords;
 	};
 
 	return new Camera();
