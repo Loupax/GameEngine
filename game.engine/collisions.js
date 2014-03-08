@@ -1,6 +1,10 @@
 define(['G'], function(G){
 	
 	var Collisions = {
+		
+		/**
+		 * Adds an event listener that should be executed when the the provided GraphicObjects collide with each other
+		 */
 		onCollide: function(object1, object2, callback){
 			var rect1 = object1.getRectangle();
 			var rect2 = object2.getRectangle();

@@ -13,6 +13,8 @@ define(function(){
 			this.height = height || 0;
 			this.right = this.left + this.width;
 			this.bottom = this.top + this.height;
+
+			return this;
 		},
 		getAngleBetweenPoints: function(pointa, pointb){
 			return Math.atan2(pointb.y - pointa.y, pointb.x - pointa.x);

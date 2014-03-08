@@ -16,11 +16,11 @@ define(['Graphic', 'Geometry', 'G'], function(Graphic, Geometry, G){
 			    this.x = x;
 			    this.y = y;
 
-			    if(!!this.grid && !!this.z_height)
+			    if(!!this.grid && this.z_height !== undefined)
 			    {
-			    	
 			    	if(this.grid.getTileHeight(this.center_point) > this.z_height)
 			    	{
+			    		
 			    		this.dead = true;
 			    	}
 			    	

@@ -54,7 +54,7 @@ define(['G'],function(G){
 			for(x = 0; x < this.width; x++){
 				for(y = 0; y < this.height; y++){
 					this.grid[x]	= this.grid[x]	  || {};
-					this.grid[x][y] = this.grid[x][y] || 0;
+					this.grid[x][y] = this.grid[x][y] || 1;
 
 					max_height = (max_height > this.grid[x][y])?max_height:this.grid[x][y];
 				}
@@ -63,9 +63,9 @@ define(['G'],function(G){
 
 		this.getTileHeight = function(point){
 			var tile_x = Math.floor(point.x / that.tile_width  );
-			var tile_y = Math.floor( point.y /that.tile_height  );
+			var tile_y = Math.floor(point.y / that.tile_height  );
 			
-			if(that.grid[tile_x] && that.grid[tile_x][tile_y])
+			if(that.grid[tile_x] && (that.grid[tile_x][tile_y] !== undefined))
 			{
 				return that.grid[tile_x][tile_y];	
 			}
@@ -74,6 +74,27 @@ define(['G'],function(G){
 				return Infinity;
 			}
 		};
+
+		this.addTile = function(point){
+			if((point.x in this.grid) && (this.y in this.grid[point.x])){
+				console.log('Test!');
+				// The tile already exists
+			}
+			else{
+				this.grid[point.x] 			= this.grid[point.x] || {};
+				this.grid[point.x][point.y] = 1;
+
+				
+				if(this.width < point.x)
+					this.width += (point.x - this.width);
+				
+
+				if(this.height < point.y)
+					this.height += (point.y - this.height);
+
+				//console.log(this.grid);
+			}
+		}
 		
 
 		//var stage = G.getStage();
@@ -123,12 +144,10 @@ define(['G'],function(G){
 		G.addPreDrawHandler(function(ctx){			
 			var x,y;
 			
-			for(x = 0; x < that.width; x++)
+			for(x in that.grid)
 			{
-				for(y = 0; y < that.height; y++){
-
-					ctx.fillStyle = rainbow(max_height, that.grid[x][y]);
-					
+				for(y  in that.grid[x]){
+					ctx.fillStyle = rainbow(max_height, that.grid[x][y]);				
 
 					ctx.fillRect(x * that.tile_width, y * that.tile_height, that.tile_width, that.tile_height);					
 
