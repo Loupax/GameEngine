@@ -75,6 +75,15 @@ define(function(){
 					objects.push(object);	
 				}				
 			},
+			prepend: function(object){
+				if(object instanceof Array){
+					for(var i = 0; i<object.length; i++)
+						this.prepend(object[i]);
+				}
+				else{
+					objects.unshift(object);	
+				}
+			},
 			setCanvas: function(_canvas){
 				canvas = _canvas;
 				context = canvas.getContext('2d');

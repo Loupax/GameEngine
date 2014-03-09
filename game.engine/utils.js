@@ -3,10 +3,20 @@ define(['Camera'],function(Camera){
   "use strict";
   
   return {
+    isArray: function(obj){
+      return( Object.prototype.toString.call( obj ) === '[object Array]' ); 
+    },
+    functionName: function(fun) {
+      var ret = fun.toString();
+      console.log(ret);
+      ret = ret.substr('function '.length);
+      ret = ret.substr(0, ret.indexOf('('));
+      return ret;
+    },
     Mouse: {
       mousePositionOnCanvas: function(e) {
           var el=e.target, c=el;
-          var scaleX = c.width/c.offsetWidth || 1;
+          var scaleX = c.width/c.offsetWidth   || 1;
           var scaleY = c.height/c.offsetHeight || 1;
 
           if (!isNaN(e.offsetX)) 

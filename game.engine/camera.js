@@ -29,7 +29,7 @@ define(['G', 'Point'], function(G, Point){
 		/**
 		 * The distance the camera will keep from the left and top  borders of the stage
 		 */
-		this.offset   = new Point(width / 2, height / 2);
+		this.offset	  = new Point(0,0);
 
 		
 		/**
@@ -129,9 +129,10 @@ define(['G', 'Point'], function(G, Point){
 
 		if(!!this.follow)
 		{
-			worldCoords.x += this.follow.x + ((this.follow.width * this.scale.x) / 2);
-			worldCoords.y += this.follow.y + ((this.follow.height * this.scale.y) / 2);	
-		}		
+			worldCoords.x += this.follow.x + ((this.follow.width) / 2);
+			worldCoords.y += this.follow.y + ((this.follow.height) / 2);	
+		}
+
 		return worldCoords;
 	};
 

@@ -84,6 +84,5 @@ define(['G', 'Geometry'], function(G, Geometry){
 		}
 	};
 
-
 	return Graphic;
 });
